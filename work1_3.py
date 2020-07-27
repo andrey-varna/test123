@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
 import unittest
-
+from address import Address
 
 class UntitledTestCase(unittest.TestCase):
     def setUp(self):
@@ -13,21 +13,21 @@ class UntitledTestCase(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.create_new_address(wd)
-        self.create_address(wd, "Viktor", "Prihodko", "08998899854")
+        self.create_address(wd, Address("Viktor", "Prihodko", "08998899854"))
         self.retern_home_page(wd)
         self.logout(wd)
 
-    def create_address(self, wd, name, lastname, phonenumber):
+    def create_address(self, wd, Address):
         # add address
         wd.find_element_by_name("firstname").clear()
         # fill address firm
-        wd.find_element_by_name("firstname").send_keys(name)
+        wd.find_element_by_name("firstname").send_keys(Address.name)
         wd.find_element_by_name("nickname").click()
         wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys(lastname)
+        wd.find_element_by_name("nickname").send_keys(Address.lastname)
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(phonenumber)
+        wd.find_element_by_name("mobile").send_keys(Address.phonenumber)
         # submit address creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
