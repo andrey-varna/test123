@@ -13,7 +13,6 @@ class UntitledTestCase(unittest.TestCase):
         self.app.create_address(Address("Viktor", "Prihodko", "08998899854"))
         self.app.logout()
 
-
     def tearDown(self):
         self.app.destroy()
 
