@@ -1,14 +1,5 @@
 # -*- coding: utf-8 -*-
-import pytest
 from model1.address import Address
-from fixture1.application1 import Application
-
-
-@pytest.fixture
-def app(request):
-    fixture = Application()
-    request.addfinalizer(fixture.destroy)
-    return fixture
 
 
 def test_untitled_test_case(app):
