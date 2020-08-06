@@ -1,4 +1,4 @@
-from model.rename import Rename
+from model.group import Rename
 
 
 def test_edit_kontakt(app):
