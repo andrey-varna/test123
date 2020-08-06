@@ -8,8 +8,9 @@ class KontaktHelper:
         wd = self.app.wd
         self.create_new_address()
         # add address
-        wd.find_element_by_name("firstname").clear()
+
         # fill address firm
+        wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(Address.name)
         wd.find_element_by_name("nickname").click()
         wd.find_element_by_name("nickname").clear()
@@ -23,7 +24,7 @@ class KontaktHelper:
 
     def create_new_address(self):
         wd = self.app.wd
-        wd.find_element_by_name("firstname").click()
+        wd.find_element_by_link_text("add new").click()
 
     def retern_home_page(self):
         wd = self.app.wd
