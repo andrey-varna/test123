@@ -29,6 +29,17 @@ class KontaktHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
 
+    def rename_kontakt(self, Rename):
+        wd = self.app.wd
+        # select first kontakt
+        wd.find_element_by_name("selected[]").click()
+        # edit kontakt
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_element_by_name("firstname").clear()
+        wd.find_element_by_name("firstname").send_keys("Pavel")
+        wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+        self.retern_home_page()
+
     def create_new_address(self):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
