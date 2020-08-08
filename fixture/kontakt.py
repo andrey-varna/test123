@@ -4,18 +4,18 @@ class KontaktHelper:
     def __init__(self, app):
         self.app = app
 
-    def create_address(self, Address):
+    def create_address(self, address):
         wd = self.app.wd
         self.create_new_address()
         # fill address firm
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(Address.name)
+        wd.find_element_by_name("firstname").send_keys(address.name)
         wd.find_element_by_name("nickname").click()
         wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys(Address.lastname)
+        wd.find_element_by_name("nickname").send_keys(address.lastname)
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(Address.phonenumber)
+        wd.find_element_by_name("mobile").send_keys(address.phonenumber)
         # submit address creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.retern_home_page()
@@ -29,7 +29,7 @@ class KontaktHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
 
-    def rename_kontakt(self, Rename):
+    def rename_kontakt(self):
         wd = self.app.wd
         # select first kontakt
         wd.find_element_by_name("selected[]").click()
