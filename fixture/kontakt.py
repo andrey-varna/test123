@@ -22,22 +22,20 @@ class KontaktHelper:
 
     def del_kontakt(self):
         wd = self.app.wd
-        # select first kontakt
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_kontakt()
         # submit deletion
         self.accept_next_alert = True
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
 
-    def rename_kontakt(self):
+    def rename_kontakt(self, rename):
         wd = self.app.wd
-        # select first kontakt
-        wd.find_element_by_name("selected[]").click()
-        # edit kontakt
+        self.select_first_kontakt()
+         # edit kontakt
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys("Pavel")
-        wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+        wd.find_element_by_name("firstname").send_keys("Sasha")
+        wd.find_element_by_name("update").click()
         self.retern_home_page()
 
     def create_new_address(self):
@@ -47,3 +45,7 @@ class KontaktHelper:
     def retern_home_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
+
+    def select_first_kontakt(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
