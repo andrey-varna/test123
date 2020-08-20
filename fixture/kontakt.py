@@ -14,9 +14,9 @@ class KontaktHelper:
         self.retern_home_page()
 
     def fill_kontakt_form(self, address):
-        self.change_field_value_kontakt("address_firstname",address.firstname)
-        self.change_field_value_kontakt("address_lastname",address.lastname)
-        self.change_field_value_kontakt("address_phonenumber",address.phonenumber)
+        self.change_field_value_kontakt("firstname", address.firstname)
+        self.change_field_value_kontakt("lastname", address.lastname)
+        self.change_field_value_kontakt("mobile", address.mobile)
 
     def change_field_value_kontakt(self, field_name, tekst):
         wd = self.app.wd
@@ -50,7 +50,7 @@ class KontaktHelper:
         # fill form kontakt
         self.fill_kontakt_form(new_kontakt_date)
         # submit modify
-        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        wd.find_element_by_name("update").click()
         self.retern_home_page()
 
     def create_new_address(self):
