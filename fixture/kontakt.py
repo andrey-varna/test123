@@ -67,6 +67,27 @@ class KontaktHelper:
 
     def count(self):
         wd = self.app.wd
+        self.home_page()
+        return len(wd.find_elements_by_name("selected[]"))
+
+    def home_page(self):
+        wd = self.app.wd
         if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_name("add")) > 0):
             wd.find_element_by_link_text("home").click()
-        return len(wd.find_elements_by_name("selected[]"))
+
+    def get_kontakt_list(self):
+        wd = self.app.wd
+        self.home_page()
+        kontakts = []
+        for tr in wd.find_elements_by_css_selector("table tr"):
+            row = tr.find_elements_by_css_selector("td")
+            if not len(row):
+                continue
+            kontakts.append(Address(
+                    lastname=row[1].text, firstname=row[2].text, id=row[0].find_element_by_css_selector("input").get_attribute('value')
+                ))
+  #       for element in wd.find_elements_by_css_selector("td.Last name") and wd.find_elements_by_css_selector("td.firstname"):
+  #          text = element.text
+   #         id = element.find_element_by_name("selected[]").get_attribute('value')
+    #        kontakts.append(Address(lastname=text, firstname=text, id=id))
+        return kontakts
