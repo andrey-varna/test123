@@ -12,6 +12,7 @@ class KontaktHelper:
         self.fill_kontakt_form(address)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.retern_home_page()
+        self.kontakt_cash = None
 
     def fill_kontakt_form(self, address):
         self.change_field_value_kontakt("firstname", address.firstname)
@@ -32,16 +33,18 @@ class KontaktHelper:
         self.accept_next_alert = True
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
+        self.kontakt_cash = None
 
     def rename_kontakt(self, rename):
         wd = self.app.wd
         self.select_first_kontakt()
-         # edit kontakt
+        # edit kontakt
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys("Sasha")
         wd.find_element_by_name("update").click()
         self.retern_home_page()
+        self.kontakt_cash = None
 
     def modify_first_kontakt(self, new_kontakt_date):
         wd = self.app.wd
@@ -52,6 +55,7 @@ class KontaktHelper:
         # submit modify
         wd.find_element_by_name("update").click()
         self.retern_home_page()
+        self.kontakt_cash = None
 
     def create_new_address(self):
         wd = self.app.wd
@@ -75,19 +79,18 @@ class KontaktHelper:
         if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_name("add")) > 0):
             wd.find_element_by_link_text("home").click()
 
+    kontakt_cash = None
+
     def get_kontakt_list(self):
-        wd = self.app.wd
-        self.home_page()
-        kontakts = []
-        for tr in wd.find_elements_by_css_selector("table tr"):
-            row = tr.find_elements_by_css_selector("td")
-            if not len(row):
-                continue
-            kontakts.append(Address(
-                    lastname=row[1].text, firstname=row[2].text, id=row[0].find_element_by_css_selector("input").get_attribute('value')
-                ))
-  #       for element in wd.find_elements_by_css_selector("td.Last name") and wd.find_elements_by_css_selector("td.firstname"):
-  #          text = element.text
-   #         id = element.find_element_by_name("selected[]").get_attribute('value')
-    #        kontakts.append(Address(lastname=text, firstname=text, id=id))
-        return kontakts
+        if self.kontakt_cash is None:
+            wd = self.app.wd
+            self.home_page()
+            self.kontakt_cash = []
+            for tr in wd.find_elements_by_css_selector("table tr"):
+                row = tr.find_elements_by_css_selector("td")
+                if not len(row):
+                    continue
+                self.kontakt_cash.append(Address(
+                    lastname=row[1].text, firstname=row[2].text, id=row[0].find_element_by_css_selector(
+                        "input").get_attribute('value')))
+        return list(self.kontakt_cash)
