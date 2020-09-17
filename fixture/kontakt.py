@@ -27,8 +27,11 @@ class KontaktHelper:
             wd.find_element_by_name(field_name).send_keys(tekst)
 
     def del_kontakt(self):
+        self.del_kontakt_by_index(0)
+
+    def del_kontakt_by_index(self, index):
         wd = self.app.wd
-        self.select_first_kontakt()
+        self.select_kontakt_by_index(index)
         # submit deletion
         self.accept_next_alert = True
         wd.find_element_by_xpath("//input[@value='Delete']").click()
@@ -46,10 +49,13 @@ class KontaktHelper:
         self.retern_home_page()
         self.kontakt_cash = None
 
-    def modify_first_kontakt(self, new_kontakt_date):
+    def modify_first_kontakt(self):
+        self.modify_kontakt_by_index(0)
+
+    def modify_kontakt_by_index(self, index, new_kontakt_date):
         wd = self.app.wd
-        self.select_first_kontakt()
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        self.select_kontakt_by_index(index)
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         # fill form kontakt
         self.fill_kontakt_form(new_kontakt_date)
         # submit modify
@@ -66,8 +72,11 @@ class KontaktHelper:
         wd.find_element_by_link_text("home page").click()
 
     def select_first_kontakt(self):
+        self.select_kontakt_by_index(0)
+
+    def select_kontakt_by_index(self, index):
         wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
 
     def count(self):
         wd = self.app.wd
